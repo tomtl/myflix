@@ -3,7 +3,8 @@ development:
   encoding: unicode
   database: myflix_development
   pool: 5
-  username: tomlee
+  host: localhost
+  username: action
   password:
 
 test:
@@ -11,5 +12,6 @@ test:
   encoding: unicode
   database: myflix_test
   pool: 5
-  username: tomlee
+  host: localhost
+  username: action
   password:
