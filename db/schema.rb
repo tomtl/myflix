@@ -11,11 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20150421002123) do
+=======
+ActiveRecord::Schema.define(version: 20150422122858) do
+>>>>>>> c2eac7deff70bedcc0b380ef35644fe028f782f5
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+<<<<<<< HEAD
+=======
+  create_table "categories", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+>>>>>>> c2eac7deff70bedcc0b380ef35644fe028f782f5
   create_table "videos", force: true do |t|
     t.string   "title"
     t.text     "description"
@@ -23,6 +36,10 @@ ActiveRecord::Schema.define(version: 20150421002123) do
     t.string   "large_cover_url"
     t.datetime "created_at"
     t.datetime "updated_at"
+<<<<<<< HEAD
+=======
+    t.integer  "category_id"
+>>>>>>> c2eac7deff70bedcc0b380ef35644fe028f782f5
   end
 
 end
