@@ -6,7 +6,7 @@
       .video_info.col-sm-3
         %header
           %h3 #{@video.title}
-          %span Category: link_to #{@video.category.name}, category_path(video.category)
+          %span Category: #{link_to @video.category.name, category_path(@video.category)}
         %p #{@video.description}
         .actions
           %a.btn.btn-primary(href="") Watch Now

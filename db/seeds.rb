@@ -11,6 +11,7 @@ Video.create(title: "Futurama", description: "Fry discovers the future", categor
               small_cover_url: "futurama.jpg", large_cover_url: "futurama.jpg")
 Video.create(title: "Monk", description: "Crazy unorthadox detective gets results", category_id: 3, 
               small_cover_url: "monk.jpg", large_cover_url: "monk_large.jpg")
+Video.create(title: "Family Guy", description: "Sick, twisted, and politically incorrect, the animated series features the adventures of the Griffin family", small_cover_url: "family_guy.jpg", large_cover_url: "family_guy.jpg", category_id: 1)
 Category.create(name: "Comedy")
 Category.create(name: "Action")
 Category.create(name: "Drama")
