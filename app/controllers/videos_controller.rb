@@ -1,7 +1,6 @@
 class VideosController < ApplicationController
   def index
-    @videos = Video.all
-    @image_path = "/tmp/"
+    @categories = Category.all
   end
   
   def show
