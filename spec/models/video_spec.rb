@@ -35,12 +35,5 @@ describe "search by title" do
     futurama = Video.create(title:"Futurama", description: "Space travel")
     back_to_future = Video.create(title: "Back to the Future", description: "Time travel")
     expect(Video.search_by_title("")).to eq([])
-  end 
-end
-
-describe "show videos in category" do
-  it "returns no videos if there are none in category"
-  it "returns only videos for specified category"
-  it "returns not more than 6 videos"
-  it "returns videos in reverse chronological order"
+  end
 end
