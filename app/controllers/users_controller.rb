@@ -7,7 +7,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       flash[:notice] = "You have registered successfully"
-      redirect_to sign_in_path
+      session[:user_id] = @user.id
+      redirect_to home_path
     else
       flash[:error] = "There was an error."
       render :new
