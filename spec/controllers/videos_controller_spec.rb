@@ -2,13 +2,23 @@ require 'spec_helper'
 
 describe VideosController do
   describe "GET show" do
-    it "sets the @video variable" do
-      futurama = Video.create(title:"Futurama", description: "Space travel")
-      back_to_future = Video.create(title: "Back to the Future", description: "Time travel")
-      get :show
-      assigns(:video).should == [futurama, back_to_future]
-    end
+    context "with authenticated users" do
+      before do
+        john = User.create(email: "example@example.com", password: "password", full_name: "John John")
+        session[:user_id] = john.id
+      end
 
-    it "renders the show template"
+      it "sets the @video variable" do
+        futurama = Video.create(title:"Futurama", description: "Space travel")
+        get :show, id: Video.first.id
+        expect(assigns(:video)).to eq(futurama)
+      end
+
+      it "renders the show template" do
+        futurama = Video.create(title:"Futurama", description: "Space travel")
+        get :show, id: Video.first.id
+        response.should render_template :show
+      end
+    end
   end
 end
