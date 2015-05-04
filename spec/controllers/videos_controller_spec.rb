@@ -21,4 +21,25 @@ describe VideosController do
       end
     end
   end
+
+  describe "GET search" do
+    context "with authenticated users" do
+      before do
+        john = User.create(email: "example@example.com", password: "password", full_name: "John John")
+        session[:user_id] = john.id
+      end
+
+      it "sets the @search variable" do
+        futurama = Video.create(title:"Futurama", description: "Space travel")
+        get :search, search_term:  Video.first.title
+        expect(assigns(:results)).to eq([futurama])
+      end
+
+      it "renders the search template" do
+        futurama = Video.create(title:"Futurama", description: "Space travel")
+        get :search, search_term: Video.first.title
+        response.should render_template :search
+      end
+    end
+  end
 end
