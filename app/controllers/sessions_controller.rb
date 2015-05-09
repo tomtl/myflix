@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       redirect_to home_path, notice: "Welcome #{user.full_name}! You are signed in."
     else
-      flash[:danger] = "Invalid email or password."
+      flash[:error] = "Invalid email or password."
       redirect_to sign_in_path
     end
   end
