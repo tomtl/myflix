@@ -4,7 +4,7 @@ development:
   database: myflix_development
   pool: 5
   host: localhost
-  username: tomlee
+  username: action
   password:
 
 test:
@@ -13,5 +13,5 @@ test:
   database: myflix_test
   pool: 5
   host: localhost
-  username: tomlee
+  username: action
   password:
