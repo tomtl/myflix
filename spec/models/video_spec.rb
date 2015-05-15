@@ -25,6 +25,7 @@ describe "search by title" do
 
   it "returns an array of all matches ordered by created_at" do
     futurama.created_at = 1.day.ago
+    back_to_future.created_at = Time.now
     expect(Video.search_by_title("Futur")).to eq([back_to_future, futurama])
   end
 

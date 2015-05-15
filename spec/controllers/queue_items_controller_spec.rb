@@ -144,7 +144,7 @@ describe QueueItemsController do
       let(:queue_item1) { Fabricate(:queue_item, user: user1, position: 1, video: video) }
       let(:queue_item2) { Fabricate(:queue_item, user: user1, position: 2, video: video) }
     
-      before { session[:user_id] = user1.id }
+      before { set_current_user(user1) }
       
       it "redirects to the my queue page" do
         post :update_queue, queue_items: [{id: queue_item1.id, position: 2.1}, {id: queue_item2.id, position: 1}]

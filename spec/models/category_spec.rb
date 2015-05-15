@@ -20,12 +20,12 @@ describe Category do
     end
   
     it "returns 6 videos if there are more than 6 videos" do
-      7.times { Fabricate(:video, category: comedies) }
+      Fabricate.times(7, :video, category: comedies)
       expect(comedies.recent_videos.count).to eq(6)
     end
     
     it "returns the most recent 6 videos" do
-      6.times { Fabricate(:video, category: comedies) }
+      Fabricate.times(6, :video, category: comedies)
       tonight_show = Video.create(title: "Tonight Show",
         description: "Talk show", category: comedies, created_at: 1.day.ago)
       expect(comedies.recent_videos).not_to include(tonight_show)

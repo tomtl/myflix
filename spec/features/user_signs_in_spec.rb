@@ -11,7 +11,7 @@ feature "Signing in" do
   scenario "Signing in with incorrect credentials" do
     visit sign_in_path
     fill_in "Email Address", with: user.email
-    fill_in "Password", with: user.password + "wrong"
+    fill_in "Password", with: "#{user.password}abcd"
     click_button "Sign in"
     expect(page).to have_content "Invalid email or password"
   end

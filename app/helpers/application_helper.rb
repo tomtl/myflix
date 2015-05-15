@@ -1,5 +1,5 @@
 module ApplicationHelper
-  def options_for_video_reviews(selected=nil)
+  def options_for_video_reviews(selected = nil)
     options_for_select(rating_values_list, selected)
   end
   
