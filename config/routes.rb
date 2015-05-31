@@ -24,7 +24,6 @@ Myflix::Application.routes.draw do
 
   resources :relationships, only: [:create, :destroy]
   get 'people', to: 'relationships#index'
-  post 'unfollow', to: 'relationships#destroy'
 
   get 'ui(/:action)', controller: 'ui'
 end

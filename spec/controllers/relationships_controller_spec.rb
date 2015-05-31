@@ -4,15 +4,15 @@ describe RelationshipsController do
   describe "post create" do
     context "for authenticated user" do
       let(:signed_in_user) { Fabricate(:user) }
+      let(:user2) { Fabricate(:user) }
 
       before do
         set_current_user(signed_in_user)
-        user2 = Fabricate(:user)
         post :create, leader_id: user2.id
       end
 
       it "creates a relationship for a signed in user" do
-        expect(Relationship.count).to eq(1)
+        expect(signed_in_user.following_relationships.first.leader).to eq(user2)
       end
 
       it "includes the signed in user as the follower in the relationship" do
@@ -26,6 +26,22 @@ describe RelationshipsController do
 
     it_behaves_like "requires sign in" do
       let(:action) { post :create, leader_id: 1 }
+    end
+
+    it "does not allow the current user to follow the leader twice" do
+      signed_in_user = Fabricate(:user)
+      set_current_user(signed_in_user)
+      user2 = Fabricate(:user)
+      Fabricate(:relationship, leader_id: user2.id, follower_id: signed_in_user.id)
+      post :create, leader_id: user2.id
+      expect(Relationship.count).to eq(1)
+    end
+
+    it " does not allow one to follow themselves" do
+      signed_in_user = Fabricate(:user)
+      set_current_user(signed_in_user)
+      post :create, leader_id: signed_in_user.id
+      expect(Relationship.count).to eq(0)
     end
   end
 
