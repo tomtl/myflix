@@ -3,8 +3,13 @@ class RelationshipsController < ApplicationController
 
   def create
     @relationship = Relationship.new(follower_id: current_user.id, leader_id: params[:leader_id])
-    @relationship.save
-    redirect_to people_path
+
+    if @relationship.save
+      redirect_to people_path
+    else
+      flash[:error] = "You are not allowed to do that."
+      redirect_to people_path
+    end
   end
 
   def index

@@ -2,32 +2,30 @@ require 'spec_helper'
 
 describe RelationshipsController do
   describe "post create" do
-    it "creates a relationship for a signed in user" do
-      signed_in_user = Fabricate(:user)
-      set_current_user(signed_in_user)
-      user2 = Fabricate(:user)
-      post :create, leader_id: user2.id
-      expect(Relationship.count).to eq(1)
-    end
+    context "for authenticated user" do
+      let(:signed_in_user) { Fabricate(:user) }
 
-    it "includes the signed in user as the follower in the relationship" do
-      signed_in_user = Fabricate(:user)
-      set_current_user(signed_in_user)
-      user2 = Fabricate(:user)
-      post :create, leader_id: user2.id
-      expect(Relationship.first.follower.id).to eq(signed_in_user.id)
-    end
+      before do
+        set_current_user(signed_in_user)
+        user2 = Fabricate(:user)
+        post :create, leader_id: user2.id
+      end
 
-    it "redirects to the people page" do
-      signed_in_user = Fabricate(:user)
-      set_current_user(signed_in_user)
-      user2 = Fabricate(:user)
-      post :create, leader_id: user2.id
-      expect(response).to redirect_to people_path
+      it "creates a relationship for a signed in user" do
+        expect(Relationship.count).to eq(1)
+      end
+
+      it "includes the signed in user as the follower in the relationship" do
+        expect(Relationship.first.follower.id).to eq(signed_in_user.id)
+      end
+
+      it "redirects to the people page" do
+        expect(response).to redirect_to people_path
+      end
     end
 
     it_behaves_like "requires sign in" do
-      let(:action) { post :create }
+      let(:action) { post :create, leader_id: 1 }
     end
   end
 
