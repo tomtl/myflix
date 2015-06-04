@@ -32,9 +32,8 @@ class User < ActiveRecord::Base
   def is_follower?(relationship)
     self == relationship.follower
   end
-  
-  private
-    def generate_token
-      self.token = SecureRandom.urlsafe_base64
-    end
+
+  def generate_token
+    self.token = SecureRandom.urlsafe_base64
+  end
 end
