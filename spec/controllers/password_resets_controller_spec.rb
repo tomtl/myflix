@@ -45,11 +45,11 @@ describe PasswordResetsController do
         expect(flash[:success]).to be_present
       end
       
-      it "regenerates the user token" do
+      it "deletes the user token" do
         user = Fabricate(:user, password: "old_password")
         user.update_column(:token, '12345')
         post :create, token: '12345', password: "new_password"
-        expect(user.reload.token).not_to eq('12345')
+        expect(user.reload.token).to be_blank
       end
     end
     
