@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.1.1'
+ruby '2.1.6'
 
 gem 'bootstrap-sass'
 gem 'bootstrap_form'
@@ -25,6 +25,7 @@ group :development do
   gem 'thin'
   gem "better_errors"
   gem "binding_of_caller"
+  gem "letter_opener_web"
 end
 
 group :development, :test do
