@@ -21,7 +21,7 @@ class RelationshipsController < ApplicationController
   def destroy
     @relationship = Relationship.find(params[:id])
 
-    if current_user.is_follower?(@relationship)
+    if current_user.follower?(@relationship)
       @relationship.destroy
       flash[:message] = "You are no longer following #{@relationship.leader.full_name}"
       redirect_to people_path

@@ -11,6 +11,7 @@
 /db/*.sqlite3
 
 # Ignore database settings - to switch between OSX and Nitrous.io
+/config/database.yml
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
