@@ -4,6 +4,8 @@ Myflix::Application.routes.draw do
 
   resources :users, only: [:create, :show]
   get 'register', to: 'users#new'
+  get 'register/:token', to: 'users#new_with_invitation_token',
+    as: 'register_with_token'
 
   resources :sessions, only: [:create, :destroy]
   get 'sign_in', to: 'sessions#new'
