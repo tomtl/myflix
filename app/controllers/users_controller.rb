@@ -20,6 +20,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      handle_invitation if params[:invitation_token].present?
       AppMailer.send_welcome_email(@user).deliver
       flash[:notice] = "You have registered successfully"
       session[:user_id] = @user.id
@@ -37,5 +38,13 @@ class UsersController < ApplicationController
   private
   def user_params
     params.require(:user).permit(:email, :password, :full_name)
+  end
+
+  def handle_invitation
+    invitation = Invitation.find_by(token: params[:invitation_token])
+    inviter = invitation.inviter
+    @user.follow(inviter)
+    inviter.follow(@user)
+    invitation.update_column(:token, nil)
   end
 end

@@ -3,7 +3,7 @@
     = link_to "MyFLiX", root_path
   - if current_user
     %ul.col-md-4.clearfix
-      %li= link_to "Videos"
+      %li= link_to "Videos", videos_path
       %li= link_to "My Queue", my_queue_path
       %li= link_to "People", people_path
     = form_tag search_videos_path, class: "for-search" do
@@ -17,6 +17,7 @@
             %b.caret
           %ul.dropdown-menu(role="menu" aria-labelledby="dlabel")
             %li
+              = link_to "Invite a friend", new_invitation_path
               %a(href="#") Account
               %a(href="#") Plan and Billing
               = link_to "Sign Out", sign_out_path

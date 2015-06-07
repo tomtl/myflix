@@ -10,15 +10,49 @@ describe UsersController do
 
   describe "POST create" do
     context "With valid input" do
-
-      before { post :create, user: Fabricate.attributes_for(:user) }
-
       it "creates the user" do
+        post :create, user: Fabricate.attributes_for(:user)
         expect(User.count).to eq(1)
       end
 
       it "redirects to the home page" do
+        post :create, user: Fabricate.attributes_for(:user)
         expect(response).to redirect_to home_path
+      end
+
+      it "makes the user follow the inviter" do
+        inviter = Fabricate(:user)
+        invitation = Fabricate(:invitation, inviter: inviter,
+                            recipient_email: "joe@example.com")
+        post :create, user: { email: "joe@example.com",
+                              password: "password",
+                              full_name: "Joe Johnson" },
+                              invitation_token: invitation.token
+        recipient = User.find_by(email: "joe@example.com")
+        expect(recipient.follows?(inviter)).to be_truthy
+      end
+
+      it "makes the inviter follow the user" do
+        inviter = Fabricate(:user)
+        invitation = Fabricate(:invitation, inviter: inviter,
+                            recipient_email: "joe@example.com")
+        post :create, user: { email: "joe@example.com",
+                              password: "password",
+                              full_name: "Joe Johnson" },
+                              invitation_token: invitation.token
+        recipient = User.find_by(email: "joe@example.com")
+        expect(inviter.follows?(recipient)).to be_truthy
+      end
+
+      it "expires the invitation upon acceptance" do
+        inviter = Fabricate(:user)
+        invitation = Fabricate(:invitation, inviter: inviter,
+                            recipient_email: "joe@example.com")
+        post :create, user: { email: "joe@example.com",
+                              password: "password",
+                              full_name: "Joe Johnson" },
+                              invitation_token: invitation.token
+        expect(Invitation.first.token).to be_nil
       end
     end
     context "with invalid input" do
