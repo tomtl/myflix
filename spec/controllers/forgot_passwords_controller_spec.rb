@@ -24,7 +24,7 @@ describe ForgotPasswordsController do
       it "generates a random token" do
         user = Fabricate(:user)
         post :create, email: user.email
-        expect(user.reload.token).to be_present
+        expect(User.last.token).to be_present
       end
 
       it "sends an email to the email address" do
