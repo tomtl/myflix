@@ -25,5 +25,5 @@ Myflix::Application.configure do
     :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
     :password       => ENV['MAILGUN_SMTP_PASSWORD'],
     :domain         => 'tomtl-myflix.heroku.com',
-    :authentication => :plain,
+    :authentication => :plain }
 end
