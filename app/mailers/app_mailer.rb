@@ -13,8 +13,8 @@ class AppMailer < ActionMailer::Base
          subject: "Please reset your password"
   end
 
-  def send_invitation_email(invitation)
-    @invitation = invitation
+  def send_invitation_email(invitation_id)
+    @invitation = Invitation.find(invitation_id)
     mail to: @invitation.recipient_email,
          from: "info@mylfix.com",
          subject: "Invitation to join MyFlix"
