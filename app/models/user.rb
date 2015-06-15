@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
 
   def follow(leader)
     if self.can_follow?(leader)
-      following_relationships.create(leader_id: leader.id) 
+      following_relationships.create(leader_id: leader.id)
     end
   end
 

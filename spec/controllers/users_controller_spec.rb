@@ -10,6 +10,8 @@ describe UsersController do
 
   describe "POST create" do
     context "With valid input" do
+      after { ActionMailer::Base.deliveries.clear }
+
       it "creates the user" do
         post :create, user: Fabricate.attributes_for(:user)
         expect(User.count).to eq(1)
@@ -55,9 +57,11 @@ describe UsersController do
         expect(Invitation.first.token).to be_nil
       end
     end
-    context "with invalid input" do
 
-      before { post :create, user: { password: "password", full_name: "Tom Lee"} }
+    context "with invalid input" do
+      before do
+        post :create, user: { password: "password", full_name: "Tom Lee"}
+      end
 
       it "does not create the user" do
         expect(User.count). to eq(0)
