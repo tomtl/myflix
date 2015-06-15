@@ -12,6 +12,7 @@ gem 'jquery-rails'
 gem 'pg'
 gem 'bcrypt-ruby'
 gem 'sidekiq'
+gem 'unicorn'
 
 group :test do
   gem 'database_cleaner', '1.2.0'
