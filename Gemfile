@@ -39,4 +39,5 @@ end
 
 group :production do
   gem 'rails_12factor'
+  gem "sentry-raven" #, :github => "getsentry/raven-ruby"
 end
