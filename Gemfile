@@ -37,7 +37,7 @@ group :development, :test do
   gem 'rspec-rails', '2.99'
 end
 
-group :production do
+group :production, :staging do
   gem 'rails_12factor'
   gem "sentry-raven" #, :github => "getsentry/raven-ruby"
 end
