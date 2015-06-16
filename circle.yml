@@ -1,0 +1,19 @@
+machine:
+  ruby:
+    version: 2.1.6
+deployment:
+  production:
+    branch: master
+    commands:
+      - heroku maintenance:on --app tomtl-myflix
+      - heroku pg:backups capture --app tomtl-myflix
+      - git push git@heroku.com:tomtl-myflix.git $CIRCLE_SHA1:refs/heads/master
+      - heroku run rake db:migrate --app tomtl-myflix
+      - heroku maintenance:off --app tomtl-myflix
+  staging:
+    branch: staging
+    commands:
+      - heroku maintenance:on --app tomtl-myflix-staging
+      - git push git@heroku.com:tomtl-myflix-staging.git $CIRCLE_SHA1:refs/heads/master
+      - heroku run rake db:migrate --app tomtl-myflix-staging
+      - heroku maintenance:off --app tomtl-myflix-staging
