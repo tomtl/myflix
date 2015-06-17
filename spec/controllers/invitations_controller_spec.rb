@@ -22,8 +22,8 @@ describe InvitationsController do
       before do
         set_current_user
         post :create, invitation: { recipient_name: "Joe Smith",
-                        recipient_email: "joe@example.com",
-                        message: "Example message" }
+                                    recipient_email: "joe@example.com",
+                                    message: "Example message" }
       end
 
       after { ActionMailer::Base.deliveries.clear }
@@ -49,7 +49,7 @@ describe InvitationsController do
       before do
         set_current_user
         post :create, invitation: { recipient_email: "joe@example.com",
-                        message: "Example message" }
+                                    message: "Example message" }
       end
 
       it "sets the @invitation" do

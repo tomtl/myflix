@@ -25,11 +25,11 @@ describe UsersController do
       it "makes the user follow the inviter" do
         inviter = Fabricate(:user)
         invitation = Fabricate(:invitation, inviter: inviter,
-                            recipient_email: "joe@example.com")
+                                            recipient_email: "joe@example.com")
         post :create, user: { email: "joe@example.com",
                               password: "password",
                               full_name: "Joe Johnson" },
-                              invitation_token: invitation.token
+                      invitation_token: invitation.token
         recipient = User.find_by(email: "joe@example.com")
         expect(recipient.follows?(inviter)).to be_truthy
       end
@@ -37,11 +37,11 @@ describe UsersController do
       it "makes the inviter follow the user" do
         inviter = Fabricate(:user)
         invitation = Fabricate(:invitation, inviter: inviter,
-                            recipient_email: "joe@example.com")
+                                            recipient_email: "joe@example.com")
         post :create, user: { email: "joe@example.com",
                               password: "password",
                               full_name: "Joe Johnson" },
-                              invitation_token: invitation.token
+                      invitation_token: invitation.token
         recipient = User.find_by(email: "joe@example.com")
         expect(inviter.follows?(recipient)).to be_truthy
       end
@@ -49,22 +49,22 @@ describe UsersController do
       it "expires the invitation upon acceptance" do
         inviter = Fabricate(:user)
         invitation = Fabricate(:invitation, inviter: inviter,
-                            recipient_email: "joe@example.com")
+                                            recipient_email: "joe@example.com")
         post :create, user: { email: "joe@example.com",
                               password: "password",
                               full_name: "Joe Johnson" },
-                              invitation_token: invitation.token
+                      invitation_token: invitation.token
         expect(Invitation.first.token).to be_nil
       end
     end
 
     context "with invalid input" do
       before do
-        post :create, user: { password: "password", full_name: "Tom Lee"}
+        post :create, user: { password: "password", full_name: "Tom Lee" }
       end
 
       it "does not create the user" do
-        expect(User.count). to eq(0)
+        expect(User.count).to eq(0)
       end
 
       it "renders the :new template" do
@@ -116,13 +116,13 @@ describe UsersController do
       expect(response).to render_template :new
     end
 
-    it "sets the recipients email address" do
+    it "sets @invitation_token" do
       invitation = Fabricate(:invitation)
       get :new_with_invitation_token, token: invitation.token
       expect(assigns(:invitation_token)).to eq(invitation.token)
     end
 
-    it "sets @invitation_token" do
+    it "renders the new user page" do
       invitation = Fabricate(:invitation)
       get :new_with_invitation_token, token: invitation.token
       expect(response).to render_template :new
