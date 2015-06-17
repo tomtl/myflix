@@ -10,7 +10,7 @@ class InvitationsController < ApplicationController
     @invitation.inviter_id = current_user.id
 
     if @invitation.save
-      AppMailer.delay.send_invitation_email(@invitation.reload.id)
+      AppMailer.delay.send_invitation_email(@invitation)
       flash[:success] = "You have successfully invited #{@invitation.recipient_name}"
       redirect_to new_invitation_path
     else
