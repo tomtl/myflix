@@ -12,6 +12,7 @@ gem 'jquery-rails'
 gem 'pg'
 gem 'bcrypt-ruby'
 gem 'sidekiq'
+gem 'sinatra', :require => nil 
 gem 'unicorn'
 
 group :test do
