@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
                                      foreign_key: :follower_id
   has_many :leading_relationships, class_name: "Relationship",
                                    foreign_key: :leader_id
-  
+
   def normalize_queue_item_positions
     queue_items.each_with_index do |queue_item, index|
       queue_item.update_attributes(position: index + 1)
@@ -21,16 +21,22 @@ class User < ActiveRecord::Base
     queue_items.map(&:video).include?(video)
   end
 
-  def follows?(another_user)
-    following_relationships.map(&:leader).include? another_user
+  def follow(leader)
+    if self.can_follow?(leader)
+      following_relationships.create(leader_id: leader.id)
+    end
   end
 
-  def can_follow?(another_user)
-    !(self.follows?(another_user) || another_user == self)
+  def follows?(another_user)
+    following_relationships.pluck(:leader_id).include? another_user.id
   end
 
   def follower?(relationship)
     self == relationship.follower
+  end
+
+  def can_follow?(another_user)
+    !(self.follows?(another_user) || another_user == self)
   end
 
   def generate_token!

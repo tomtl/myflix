@@ -11,14 +11,18 @@ gem 'uglifier'
 gem 'jquery-rails'
 gem 'pg'
 gem 'bcrypt-ruby'
-gem 'fabrication'
-gem 'faker'
+gem 'sidekiq'
+gem 'sinatra', :require => nil 
+gem 'unicorn'
 
 group :test do
   gem 'database_cleaner', '1.2.0'
   gem 'shoulda-matchers'
+  gem 'fabrication'
+  gem 'faker'
   gem 'capybara'
   gem 'launchy'
+  gem 'capybara-email', github: 'dockyard/capybara-email'
 end
 
 group :development do
@@ -34,6 +38,7 @@ group :development, :test do
   gem 'rspec-rails', '2.99'
 end
 
-group :production do
+group :production, :staging do
   gem 'rails_12factor'
+  gem "sentry-raven" #, :github => "getsentry/raven-ruby"
 end

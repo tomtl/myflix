@@ -24,7 +24,10 @@ Myflix::Application.configure do
     :address        => ENV['MAILGUN_SMTP_SERVER'],
     :user_name      => ENV['MAILGUN_SMTP_LOGIN'],
     :password       => ENV['MAILGUN_SMTP_PASSWORD'],
-    :domain         => 'tomtl-myflix.heroku.com',
+    :domain         => 'tomtl-myflix-staging.heroku.com',
     :authentication => :plain }
-  config.action_mailer.default_url_options = { host: 'http://tomtl-myflix.herokuapp.com' }
+  config.action_mailer.default_url_options = { 
+    host: 'http://tomtl-myflix-staging.herokuapp.com' }
+  
+  ActionMailer::Base.delivery_method = :smtp
 end
