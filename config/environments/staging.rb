@@ -28,4 +28,6 @@ Myflix::Application.configure do
     :authentication => :plain }
   config.action_mailer.default_url_options = { 
     host: 'http://tomtl-myflix-staging.herokuapp.com' }
+  
+  ActionMailer::Base.delivery_method = :smtp
 end
