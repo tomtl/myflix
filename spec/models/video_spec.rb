@@ -10,7 +10,7 @@ end
 describe "search by title" do
   let(:futurama) { Fabricate(:video, title:"Futurama") }
   let(:back_to_future) { Fabricate(:video, title: "Back to the Future") }
-  
+
   it "returns an empty array if there is no match" do
     expect(Video.search_by_title("Hello")).to eq([])
   end
