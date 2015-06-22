@@ -29,59 +29,52 @@ describe Admin::VideosController do
     end
 
     context "with valid input" do
+      let(:category) { Fabricate(:category) }
+
+      before do
+        set_current_admin
+        post :create, video: { title: "Monk",
+                               category_id: category.id,
+                               description: "Detective show" }
+      end
+
       it "sets @video" do
-        user = Fabricate(:admin)
-        set_current_user(user)
-        video = Fabricate.attributes_for(:video)
-        post :create, video: video
-        expect(assigns(:video)).to be_instance_of(Video)
+        expect(assigns(:video)).to be_present
       end
 
       it "saves the video" do
-        user = Fabricate(:admin)
-        set_current_user(user)
-        video = Fabricate.attributes_for(:video)
-        post :create, video: video
-        expect(Video.count).to eq(1)
+        expect(category.videos.count).to eq(1)
       end
 
       it "displays success message" do
-        user = Fabricate(:admin)
-        set_current_user(user)
-        video = Fabricate.attributes_for(:video)
-        post :create, video: video
         expect(flash[:success]).to be_present
       end
 
-      it "redirects to video page" do
-        user = Fabricate(:admin)
-        set_current_user(user)
-        video = Fabricate.attributes_for(:video)
-        post :create, video: video
-        expect(response).to redirect_to videos_path(Video.first)
+      it "redirects to add new video page" do
+        expect(response).to redirect_to new_admin_video_path
       end
     end
 
     context "with invalid input" do
+      before do
+        set_current_admin
+        post :create, video: { title: "Monk" }
+      end
+      
       it "does not save the video" do
-        user = Fabricate(:admin)
-        set_current_user(user)
-        post :create, video: { category_id: 1 }
         expect(Video.count).to eq(0)
       end
 
       it "sets @video" do
-        user = Fabricate(:admin)
-        set_current_user(user)
-        post :create, video: { category_id: 1 }
         expect(assigns(:video)).to be_present
       end
 
       it "renders the new template" do
-        user = Fabricate(:admin)
-        set_current_user(user)
-        post :create, video: { category_id: 1 }
         expect(response).to render_template(:new)
+      end
+      
+      it "sets the flash error message" do
+        expect(flash[:error]).to be_present
       end
     end
 
