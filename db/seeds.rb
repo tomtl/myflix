@@ -65,7 +65,7 @@ Video.create!(title: "Family Guy",
               large_cover_url: "/tmp/family_guy.jpg",
               category: comedies)
 
-tom = User.create!(full_name: "Tom Lee", password: "password", email: "tom@example.com")
+tom = User.create!(full_name: "Tom Test", password: "password", email: "tom@example.com", admin: true)
 
 Review.create!(user: tom, video: monk, rating: 5, content: "This is a really good movie! My review is very positive about it. Here is more to be read.")
 Review.create!(user: tom, video: monk, rating: 2, content: "This is a OK movie times two! My review is mediocre about it. Here is more to be read.")
