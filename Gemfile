@@ -15,6 +15,7 @@ gem 'sidekiq'
 gem 'sinatra', :require => nil
 gem 'unicorn'
 gem 'carrierwave'
+gem 'carrierwave-aws'
 gem 'mini_magick'
 
 group :test do
@@ -41,7 +42,6 @@ group :development, :test do
 end
 
 group :production, :staging do
-  gem 'carrierwave-aws'
   gem 'rails_12factor'
   gem "sentry-raven" #, :github => "getsentry/raven-ruby"
 end
