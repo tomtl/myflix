@@ -12,8 +12,11 @@ gem 'jquery-rails'
 gem 'pg'
 gem 'bcrypt-ruby'
 gem 'sidekiq'
-gem 'sinatra', :require => nil 
+gem 'sinatra', :require => nil
 gem 'unicorn'
+gem 'carrierwave'
+gem 'fog'
+gem 'mini_magick'
 
 group :test do
   gem 'database_cleaner', '1.2.0'
