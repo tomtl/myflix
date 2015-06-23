@@ -5,7 +5,6 @@ class Video < ActiveRecord::Base
   mount_uploader :large_cover, LargeCoverUploader
   mount_uploader :small_cover, SmallCoverUploader
 
-
   validates :title, presence: true
   validates :description, presence: true
 
