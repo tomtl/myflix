@@ -13,7 +13,7 @@ shared_examples "requires admin" do
     action
     expect(response).to redirect_to root_path
   end
-  
+
   it "displays error message for regular user" do
     user = Fabricate(:user, admin: false)
     set_current_user(user)

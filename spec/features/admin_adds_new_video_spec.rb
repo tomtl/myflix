@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 feature "Admin adds new video" do
   scenario "Admin successfully adds a video" do

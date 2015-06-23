@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe Admin::VideosController do
   describe "GET new" do
@@ -60,7 +60,7 @@ describe Admin::VideosController do
         set_current_admin
         post :create, video: { title: "Monk" }
       end
-      
+
       it "does not save the video" do
         expect(Video.count).to eq(0)
       end
@@ -72,7 +72,7 @@ describe Admin::VideosController do
       it "renders the new template" do
         expect(response).to render_template(:new)
       end
-      
+
       it "sets the flash error message" do
         expect(flash[:error]).to be_present
       end
