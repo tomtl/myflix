@@ -21,6 +21,7 @@ class Admin::VideosController < AdminsController
                                     :category_id,
                                     :description,
                                     :large_cover,
-                                    :small_cover)
+                                    :small_cover,
+                                    :video_url)
     end
 end
