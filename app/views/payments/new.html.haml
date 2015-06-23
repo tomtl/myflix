@@ -1,0 +1,8 @@
+%p Payments
+
+= form_tag payments_path do
+  %script.stripe-button{"data-amount" => "999", 
+                        "data-description" => "Monthly fee", 
+                        "data-key" => "pk_test_OLR2muzsZUZo8nTMiMcfaiit", 
+                        "data-name" => "Payment", 
+                        :src => "https://checkout.stripe.com/checkout.js"}
