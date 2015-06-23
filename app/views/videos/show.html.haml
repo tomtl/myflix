@@ -9,7 +9,9 @@
           %span Category: #{link_to @video.category.name, category_path(@video.category)}
         %p #{@video.description}
         .actions
-          %a.btn.btn-primary(href="") Watch Now
+          = link_to @video.video_url, class:"btn btn-primary" do
+            %span.glyphicon.glyphicon-play
+            Watch Now
           = link_to "+ My Queue", queue_items_path(video_id: @video.id), method: :post, class: 'btn btn-default' unless current_user.queued_video?(@video)
 
 %section.reviews.container
