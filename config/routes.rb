@@ -40,8 +40,6 @@ Myflix::Application.routes.draw do
 
   resources :invitations, only: [:new, :create]
 
-  resources :payments, only: [:new, :create]
-
   get 'ui(/:action)', controller: 'ui'
   
   # Sidekiq monitoring
