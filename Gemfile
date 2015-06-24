@@ -17,6 +17,8 @@ gem 'unicorn'
 gem 'carrierwave'
 gem 'carrierwave-aws'
 gem 'mini_magick'
+gem 'stripe'
+gem 'figaro'
 
 group :test do
   gem 'database_cleaner', '1.2.0'
