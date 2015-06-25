@@ -30,6 +30,9 @@ class UsersController < ApplicationController
         source: params[:stripeToken],
         description: "Sign up charge for #{@user.email}"
       )
+      # StripeWrapper::Charge.create(
+      #
+      # )
 
       AppMailer.send_welcome_email(@user).deliver
       flash[:notice] = "You have registered successfully"
