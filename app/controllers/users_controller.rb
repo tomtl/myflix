@@ -28,13 +28,12 @@ class UsersController < ApplicationController
         card: params[:stripeToken],
         description: "Sign up charge for #{@user.email}"
       )
-
-      if charge.successful?
-        flash[:success] = "Thanks, your payment has been processed successfully"
-      else
-        flash.now[:error] = charge.error_message
-        render :new and return
-      end
+      # if charge.successful?
+      #   flash[:success] = "Thanks, your payment has been processed successfully"
+      # else
+      #   flash.now[:error] = charge.error_message
+      #   render :new and return
+      # end
 
       AppMailer.send_welcome_email(@user).deliver
       flash[:notice] = "You have registered successfully"
