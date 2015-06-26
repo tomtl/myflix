@@ -22,11 +22,20 @@ VCR.configure do |c|
   c.ignore_localhost = true
 end
 
+Capybara.server_port = 52662
+
 RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
   config.infer_base_class_for_anonymous_controllers = false
   config.order = "random"
   config.infer_spec_type_from_file_location!
   config.treat_symbols_as_metadata_keys_with_true_values = true
+
+  # Database cleaner config
+  config.before(:suite) { DatabaseCleaner.clean_with(:truncation) }
+  config.before(:each) { DatabaseCleaner.strategy = :transaction }
+  config.before(:each, :js => true) { DatabaseCleaner.strategy = :truncation }
+  config.before(:each) { DatabaseCleaner.start }
+  config.after(:each) { DatabaseCleaner.clean }
 end
