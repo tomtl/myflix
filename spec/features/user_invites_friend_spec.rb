@@ -32,13 +32,11 @@ feature "User invites friend" do
     select "7 - July", from: "date_month"
     select "2018", from: "date_year"
     click_button "Sign Up"
+    sleep(1)
   end
 
   def check_friend_is_following_user
-    friend = User.find_by(email: @friend[:email])
-    sign_in(friend)
     visit people_path
-    sleep(2)
     expect(page).to have_content(@user.full_name)
   end
 
@@ -46,7 +44,6 @@ feature "User invites friend" do
     visit sign_out_path
     sign_in(@user)
     visit people_path
-    sleep(2)
     expect(page).to have_content(@friend[:full_name])
   end
 end
