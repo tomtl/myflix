@@ -25,7 +25,7 @@ class UsersController < ApplicationController
 
       charge = StripeWrapper::Charge.create(
         amount: 999,
-        card: params[:stripeToken],
+        source: params[:stripeToken],
         description: "Sign up charge for #{@user.email}"
       )
       # if charge.successful?
@@ -36,11 +36,11 @@ class UsersController < ApplicationController
       # end
 
       AppMailer.send_welcome_email(@user).deliver
-      flash[:notice] = "You have registered successfully"
+      flash[:success] = "You have registered successfully"
       session[:user_id] = @user.id
       redirect_to home_path
     else
-      flash.now[:error] = "There was an error."
+      flash.now[:error] = "Please fix the following errors"
       render :new
     end
   end
