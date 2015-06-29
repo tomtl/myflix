@@ -7,6 +7,8 @@ require 'capybara/email/rspec'
 require 'sidekiq/testing'
 require 'vcr'
 
+Capybara.javascript_driver = :webkit
+
 Sidekiq::Testing.inline!
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
