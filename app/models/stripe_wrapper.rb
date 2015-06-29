@@ -1,15 +1,13 @@
 module StripeWrapper
   class Charge
-    attr_reader :response, :status
+    attr_reader :response, :error_message
 
-    def initialize(response, status)
-      @response = response
-      @status = status
+    def initialize(options = {})
+      @response = options[:response]
+      @error_message = options[:error_message]
     end
 
     def self.create(options = {})
-      Stripe.api_key = ENV["STRIPE_SECRET_KEY"]
-
       begin
         response = Stripe::Charge.create(
           amount: options[:amount],
@@ -17,18 +15,14 @@ module StripeWrapper
           source: options[:source],
           description: options[:description]
         )
-        new(response, :success)
+        new(response: response)
       rescue Stripe::CardError => e
-        new(e, :error)
+        new(error_message: e.message)
       end
     end
 
     def successful?
-      status == :success
-    end
-
-    def error_message
-      response.message
+      response.present?
     end
   end
 end
