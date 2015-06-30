@@ -1,0 +1,69 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/charges
+    body:
+      encoding: US-ASCII
+      string: amount=999&currency=usd&source=tok_16JCjtIgCm8hkqALx5b4WOOY&description=Sign%20up%20charge%20for%20amir_davis%40kuvalis.net
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.22.0
+      Authorization:
+      - Bearer sk_test_OyguaVei81Gg7bCwTjl5BO7l
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.22.0","lang":"ruby","lang_version":"2.1.6 p336 (2015-04-13)","platform":"x86_64-darwin14.0","engine":"ruby","publisher":"stripe","uname":"Darwin
+        Thomass-Air.home 14.3.0 Darwin Kernel Version 14.3.0: Mon Mar 23 11:59:05
+        PDT 2015; root:xnu-2782.20.48~5/RELEASE_X86_64 x86_64","hostname":"Thomass-Air.home"}'
+      Content-Length:
+      - '123'
+  response:
+    status:
+      code: 402
+      message: Payment Required
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 30 Jun 2015 00:36:42 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '198'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_6WFE4uBLgAkRWV
+      Stripe-Version:
+      - '2015-06-15'
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "error": {
+            "message": "Your card's security code is incorrect.",
+            "type": "card_error",
+            "param": "cvc",
+            "code": "incorrect_cvc",
+            "charge": "ch_16JCjuIgCm8hkqALavAouLow"
+          }
+        }
+    http_version: 
+  recorded_at: Tue, 30 Jun 2015 00:36:42 GMT
+recorded_with: VCR 2.9.3

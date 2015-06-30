@@ -8,6 +8,14 @@ require 'sidekiq/testing'
 require 'vcr'
 
 Capybara.javascript_driver = :webkit
+Capybara.server_port = 52662
+
+Capybara::Webkit.configure do |config|
+  config.allow_url("https://js.stripe.com")
+  config.allow_url("api.stripe.com")
+  config.allow_url("www.gravatar.com")
+end
+
 
 Sidekiq::Testing.inline!
 
@@ -23,8 +31,6 @@ VCR.configure do |c|
   c.allow_http_connections_when_no_cassette = true
   c.ignore_localhost = true
 end
-
-Capybara.server_port = 52662
 
 RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
