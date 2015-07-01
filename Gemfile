@@ -17,6 +17,8 @@ gem 'unicorn'
 gem 'carrierwave'
 gem 'carrierwave-aws'
 gem 'mini_magick'
+gem 'stripe'
+gem 'figaro'
 
 group :test do
   gem 'database_cleaner', '1.2.0'
@@ -26,6 +28,10 @@ group :test do
   gem 'capybara'
   gem 'launchy'
   gem 'capybara-email', github: 'dockyard/capybara-email'
+  gem 'vcr'
+  gem 'webmock'
+  gem 'selenium-webdriver'
+  gem 'capybara-webkit'
 end
 
 group :development do

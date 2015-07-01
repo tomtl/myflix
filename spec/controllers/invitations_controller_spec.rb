@@ -48,8 +48,10 @@ describe InvitationsController do
     context "with invalid input" do
       before do
         set_current_user
-        post :create, invitation: { recipient_email: "joe@example.com",
-                                    message: "Example message" }
+        post :create, invitation: {
+          recipient_email: "joe@example.com",
+          message: "Example message"
+        }
       end
 
       it "sets the @invitation" do

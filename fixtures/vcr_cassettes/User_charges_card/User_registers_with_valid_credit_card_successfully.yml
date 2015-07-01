@@ -1,0 +1,122 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.stripe.com/v1/charges
+    body:
+      encoding: US-ASCII
+      string: amount=999&currency=usd&source=tok_16JCjiIgCm8hkqAL8ACqH9MS&description=Sign%20up%20charge%20for%20delmer%40murray.info
+    headers:
+      Accept:
+      - "*/*; q=0.5, application/xml"
+      Accept-Encoding:
+      - gzip, deflate
+      User-Agent:
+      - Stripe/v1 RubyBindings/1.22.0
+      Authorization:
+      - Bearer sk_test_OyguaVei81Gg7bCwTjl5BO7l
+      Content-Type:
+      - application/x-www-form-urlencoded
+      X-Stripe-Client-User-Agent:
+      - '{"bindings_version":"1.22.0","lang":"ruby","lang_version":"2.1.6 p336 (2015-04-13)","platform":"x86_64-darwin14.0","engine":"ruby","publisher":"stripe","uname":"Darwin
+        Thomass-Air.home 14.3.0 Darwin Kernel Version 14.3.0: Mon Mar 23 11:59:05
+        PDT 2015; root:xnu-2782.20.48~5/RELEASE_X86_64 x86_64","hostname":"Thomass-Air.home"}'
+      Content-Length:
+      - '119'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Tue, 30 Jun 2015 00:36:31 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1458'
+      Connection:
+      - keep-alive
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Allow-Methods:
+      - GET, POST, HEAD, OPTIONS, DELETE
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '300'
+      Cache-Control:
+      - no-cache, no-store
+      Request-Id:
+      - req_6WFEE9gnHcGd03
+      Stripe-Version:
+      - '2015-06-15'
+      Strict-Transport-Security:
+      - max-age=31556926; includeSubDomains
+    body:
+      encoding: UTF-8
+      string: |
+        {
+          "id": "ch_16JCjjIgCm8hkqALH9KPKcCC",
+          "object": "charge",
+          "created": 1435624591,
+          "livemode": false,
+          "paid": true,
+          "status": "succeeded",
+          "amount": 999,
+          "currency": "usd",
+          "refunded": false,
+          "source": {
+            "id": "card_16JCjiIgCm8hkqALUT1PUpDI",
+            "object": "card",
+            "last4": "4242",
+            "brand": "Visa",
+            "funding": "credit",
+            "exp_month": 7,
+            "exp_year": 2018,
+            "fingerprint": "Co17IYkKBYatKAgX",
+            "country": "US",
+            "name": null,
+            "address_line1": null,
+            "address_line2": null,
+            "address_city": null,
+            "address_state": null,
+            "address_zip": null,
+            "address_country": null,
+            "cvc_check": "pass",
+            "address_line1_check": null,
+            "address_zip_check": null,
+            "tokenization_method": null,
+            "dynamic_last4": null,
+            "metadata": {},
+            "customer": null
+          },
+          "captured": true,
+          "balance_transaction": "txn_16JCjjIgCm8hkqALTdDEZWX0",
+          "failure_message": null,
+          "failure_code": null,
+          "amount_refunded": 0,
+          "customer": null,
+          "invoice": null,
+          "description": "Sign up charge for delmer@murray.info",
+          "dispute": null,
+          "metadata": {},
+          "statement_descriptor": null,
+          "fraud_details": {},
+          "receipt_email": null,
+          "receipt_number": null,
+          "shipping": null,
+          "destination": null,
+          "application_fee": null,
+          "refunds": {
+            "object": "list",
+            "total_count": 0,
+            "has_more": false,
+            "url": "/v1/charges/ch_16JCjjIgCm8hkqALH9KPKcCC/refunds",
+            "data": []
+          }
+        }
+    http_version: 
+  recorded_at: Tue, 30 Jun 2015 00:36:31 GMT
+recorded_with: VCR 2.9.3

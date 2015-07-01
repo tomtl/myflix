@@ -19,14 +19,26 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if @user.save
-      handle_invitation if params[:invitation_token].present?
-      AppMailer.send_welcome_email(@user).deliver
-      flash[:notice] = "You have registered successfully"
-      session[:user_id] = @user.id
-      redirect_to home_path
+
+    if @user.valid?
+      charge = StripeWrapper::Charge.create(
+        amount: 999,
+        source: params[:stripeToken],
+        description: "Sign up charge for #{@user.email}"
+      )
+      if charge.successful?
+        @user.save
+        handle_invitation if params[:invitation_token].present?
+        AppMailer.send_welcome_email(@user).deliver
+        flash[:success] = "You have registered successfully"
+        session[:user_id] = @user.id
+        redirect_to home_path
+      else
+        flash.now[:error] = charge.error_message
+        render :new and return
+      end
     else
-      flash[:error] = "There was an error."
+      flash.now[:error] = "Please fix the following errors"
       render :new
     end
   end
