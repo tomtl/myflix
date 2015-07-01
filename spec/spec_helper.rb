@@ -16,7 +16,6 @@ Capybara::Webkit.configure do |config|
   config.allow_url("www.gravatar.com")
 end
 
-
 Sidekiq::Testing.inline!
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
@@ -43,7 +42,7 @@ RSpec.configure do |config|
   # Database cleaner config
   config.before(:suite) { DatabaseCleaner.clean_with(:truncation) }
   config.before(:each) { DatabaseCleaner.strategy = :transaction }
-  config.before(:each, :js => true) { DatabaseCleaner.strategy = :truncation }
+  config.before(:each, js: true) { DatabaseCleaner.strategy = :truncation }
   config.before(:each) { DatabaseCleaner.start }
   config.after(:each) { DatabaseCleaner.clean }
 end

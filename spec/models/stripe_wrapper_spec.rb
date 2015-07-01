@@ -5,11 +5,11 @@ describe StripeWrapper do
     describe ".create" do
       let(:token) do
         Stripe::Token.create(
-          :card => {
-            :number => card_number,
-            :exp_month => 6,
-            :exp_year => 2018,
-            :cvc => "314"
+          card: {
+            number: card_number,
+            exp_month: 6,
+            exp_year: 2018,
+            cvc: "314"
           },
         ).id
       end

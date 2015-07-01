@@ -1,7 +1,7 @@
 require "spec_helper"
 
 feature "User invites friend" do
-  scenario "User successfully invites friend and invitation is accepted", { js: true, vcr: true } do
+  scenario "User successfully invites friend and invitation is accepted", :js, :vcr do
     @user = Fabricate(:user)
     @friend = Fabricate.attributes_for(:user)
     sign_in(@user)

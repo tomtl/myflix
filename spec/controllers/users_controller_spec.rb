@@ -43,7 +43,8 @@ describe UsersController do
       it "makes the inviter follow the user" do
         inviter = Fabricate(:user)
         invitation = Fabricate(
-          :invitation, inviter: inviter,
+          :invitation,
+          inviter: inviter,
           recipient_email: "joe@example.com"
         )
         post :create,
@@ -60,7 +61,8 @@ describe UsersController do
       it "expires the invitation upon acceptance" do
         inviter = Fabricate(:user)
         invitation = Fabricate(
-          :invitation, inviter: inviter,
+          :invitation,
+          inviter: inviter,
           recipient_email: "joe@example.com"
         )
         post :create,
@@ -74,7 +76,7 @@ describe UsersController do
       end
     end
 
-    context "with valid personal info and declined credit card"   do
+    context "with valid personal info and declined credit card"  do
       let(:charge) do
         double(
           :charge,
@@ -133,7 +135,7 @@ describe UsersController do
     end
 
     context "sending out welcome emails" do
-      let(:charge) { double(:charge, successful?: true)}
+      let(:charge) { double(:charge, successful?: true) }
 
       before do
         StripeWrapper::Charge.should_receive(:create).and_return(charge)

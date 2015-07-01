@@ -1,6 +1,6 @@
 require "spec_helper"
 
-feature "User charges card", { js: true, vcr: true } do
+feature "User charges card", :js, :vcr do
   let(:valid_user) { Fabricate.attributes_for(:user) }
   let(:invalid_user) { Fabricate.attributes_for(:user, email: nil) }
   let(:valid_credit_card) { "4242424242424242" }
@@ -9,6 +9,7 @@ feature "User charges card", { js: true, vcr: true } do
   let(:expired_credit_card) { "4000000000000069" }
   let(:credit_card_with_incorrect_cvc) { "4000000000000127" }
 
+  after { ActionMailer::Base.deliveries.clear }
 
   scenario "User registers with valid user info and credit card successfully" do
     register_user(valid_user, valid_credit_card)
