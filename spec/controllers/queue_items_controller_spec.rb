@@ -108,7 +108,7 @@ describe QueueItemsController do
       expect(QueueItem.first.position).to eq(1)
     end
 
-    it "does not delete the queue item if it is not in the current user's queue" do
+    it "does not delete the queue item if it's not in current user's queue" do
       user1 = Fabricate(:user)
       user2 = Fabricate(:user)
       set_current_user(user1)
@@ -135,41 +135,40 @@ describe QueueItemsController do
     context "with valid inputs" do
       let(:user1) { Fabricate(:user) }
       let(:video) { Fabricate(:video) }
-      let(:queue_item1) { Fabricate(:queue_item,
-                                    user: user1,
-                                    position: 1,
-                                    video: video) }
-      let(:queue_item2) { Fabricate(:queue_item,
-                                    user: user1,
-                                    position: 2,
-                                    video: video) }
+      let(:queue_item1) do
+        Fabricate(:queue_item, user: user1, position: 1, video: video)
+      end
+
+      let(:queue_item2) do
+        Fabricate(:queue_item, user: user1, position: 2, video: video)
+      end
 
       before { set_current_user(user1) }
 
       it "redirects to the my queue page" do
         post :update_queue,
-          queue_items: [
-            { id: queue_item1.id, position: 2 },
-            { id: queue_item2.id, position: 1 }
-          ]
+             queue_items: [
+               { id: queue_item1.id, position: 2 },
+               { id: queue_item2.id, position: 1 }
+             ]
         expect(response).to redirect_to my_queue_path
       end
 
       it "reorders the queue items" do
         post :update_queue,
-          queue_items: [
-            { id: queue_item1.id, position: 2 },
-            { id: queue_item2.id, position: 1 }
-           ]
+             queue_items: [
+               { id: queue_item1.id, position: 2 },
+               { id: queue_item2.id, position: 1 }
+             ]
         expect(user1.queue_items).to eq([queue_item2, queue_item1])
       end
 
       it "normalizes the position numbers" do
         post :update_queue,
-          queue_items: [
-            { id: queue_item1.id, position: 3 },
-            { id: queue_item2.id, position: 4 }
-          ]
+             queue_items: [
+               { id: queue_item1.id, position: 3 },
+               { id: queue_item2.id, position: 4 }
+             ]
         expect(user1.queue_items.map(&:position)).to eq([1,2])
       end
     end
@@ -177,41 +176,32 @@ describe QueueItemsController do
     context "with invalid inputs" do
       let(:user1) { Fabricate(:user) }
       let(:video) { Fabricate(:video) }
-      let(:queue_item1) { Fabricate(:queue_item,
-                                    user: user1,
-                                    position: 1,
-                                    video: video) }
-      let(:queue_item2) { Fabricate(:queue_item,
-                                    user: user1,
-                                    position: 2,
-                                    video: video) }
+      let(:queue_item1) do
+        Fabricate(:queue_item, user: user1, position: 1, video: video)
+      end
 
-      before { set_current_user(user1) }
+      let(:queue_item2) do
+        Fabricate(:queue_item, user: user1, position: 2, video: video)
+      end
+
+      before do
+        set_current_user(user1)
+        post :update_queue,
+             queue_items: [
+               { id: queue_item1.id, position: 2.1 },
+               { id: queue_item2.id, position: 1 }
+             ]
+      end
 
       it "redirects to the my queue page" do
-        post :update_queue,
-          queue_items: [
-            { id: queue_item1.id, position: 2.1 },
-            { id: queue_item2.id, position: 1 }
-          ]
         expect(response).to redirect_to my_queue_path
       end
 
       it "sets the flash[:error] message" do
-        post :update_queue,
-          queue_items: [
-            { id: queue_item1.id, position: 2.1 },
-            { id: queue_item2.id, position: 1 }
-          ]
         expect(flash[:error]).to be_present
       end
 
       it "does not change the my queue items" do
-        post :update_queue,
-          queue_items: [
-            { id: queue_item1.id, position: 2 },
-            { id: queue_item2.id, position: 1.1 }
-          ]
         expect(queue_item1.position).to eq(1)
       end
     end

@@ -76,7 +76,7 @@ describe UsersController do
       end
     end
 
-    context "with valid personal info and declined credit card"  do
+    context "with valid personal info and declined credit card" do
       let(:charge) do
         double(
           :charge,
