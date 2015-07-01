@@ -1,6 +1,8 @@
 require "spec_helper"
 
 feature "User invites friend" do
+  after { ActionMailer::Base.deliveries.clear }
+
   scenario "User successfully invites friend and invitation is accepted", :js, :vcr do
     @user = Fabricate(:user)
     @friend = Fabricate.attributes_for(:user)

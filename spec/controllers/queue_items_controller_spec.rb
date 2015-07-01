@@ -94,16 +94,8 @@ describe QueueItemsController do
     it "normalizes the remaining queue item positions" do
       user1 = Fabricate(:user)
       set_current_user(user1)
-      queue_item1 = Fabricate(
-        :queue_item,
-        user: user1,
-        position: 1
-      )
-      queue_item2 = Fabricate(
-        :queue_item,
-        user: user1,
-        position: 2
-      )
+      queue_item1 = Fabricate(:queue_item, user: user1, position: 1)
+      queue_item2 = Fabricate(:queue_item, user: user1, position: 2)
       delete :destroy, id: queue_item1.id
       expect(QueueItem.first.position).to eq(1)
     end
