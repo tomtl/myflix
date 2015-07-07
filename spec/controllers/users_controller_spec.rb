@@ -37,6 +37,10 @@ describe UsersController do
         expect(response).to render_template :new
       end
 
+      it "sets @user" do
+        expect(assigns(:user)).to be_instance_of(User)
+      end
+
       it "sets the flash error message" do
         expect(flash[:error]).to be_present
       end
