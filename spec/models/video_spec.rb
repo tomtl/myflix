@@ -33,3 +33,15 @@ describe "search by title" do
     expect(Video.search_by_title("")).to eq([])
   end
 end
+
+describe "rating" do
+  it "averages the rating for more than one review" do
+    video = Fabricate(:video)
+    user1 = Fabricate(:user)
+    user2 = Fabricate(:user)
+    review1 = Fabricate(:review, user: user1, rating: 1, video: video)
+    review2 = Fabricate(:review, user: user2, rating: 5, video: video)
+    expect(video.rating).to eq(3)
+  end
+end
+

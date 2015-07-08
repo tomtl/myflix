@@ -14,10 +14,6 @@ class Video < ActiveRecord::Base
   end
 
   def rating
-    ratings = reviews.map(&:rating)
-    unless ratings.empty?
-      rating = ratings.sum / ratings.count.to_f
-      rating.round(1)
-    end
+    reviews.average(:rating).round(1) if reviews.average(:rating)
   end
 end

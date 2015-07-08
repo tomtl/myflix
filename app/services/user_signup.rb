@@ -5,17 +5,17 @@ class UserSignup
     @user = user
   end
 
-  def sign_up(stripe_token, invitation_token)
+  def sign_up(sign_up_options = {})
+    stripe_token = sign_up_options[:stripe_token]
+    invitation_token = sign_up_options[:invitation_token]
+
     if @user.valid?
-      charge = StripeWrapper::Charge.create(
-        amount: 999,
-        source: stripe_token,
-        description: "Sign up charge for #{@user.email}"
-      )
+      charge = charge_for_signup(stripe_token)
+
       if charge.successful?
         @user.save
         handle_invitation(invitation_token) if invitation_token.present?
-        AppMailer.send_welcome_email(@user).deliver
+        send_welcome_email
         @status = :success
       else
         @status = :failed
@@ -25,7 +25,8 @@ class UserSignup
       @status = :failed
       @error_message = "Invalid user information. Please fix the errors below."
     end
-    return self
+
+    self
   end
 
   def successful?
@@ -34,11 +35,23 @@ class UserSignup
 
   private
 
+  def charge_for_signup(stripe_token)
+      StripeWrapper::Charge.create(
+        amount: 999,
+        source: stripe_token,
+        description: "Sign up charge for #{@user.email}"
+      )
+  end
+
   def handle_invitation(invitation_token)
     invitation = Invitation.find_by(token: invitation_token)
     inviter = invitation.inviter
     @user.follow(inviter)
     inviter.follow(@user)
     invitation.update_column(:token, nil)
+  end
+
+  def send_welcome_email
+    AppMailer.send_welcome_email(@user).deliver
   end
 end
