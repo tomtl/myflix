@@ -19,14 +19,15 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    result = UserSignup.new(@user).sign_up(params[:stripeToken], params[:invitation_token])
+    result = UserSignup.new(@user).sign_up(
+      params[:stripeToken], params[:invitation_token])
 
     if result.successful?
       flash[:success] = "You have registered successfully"
       session[:user_id] = @user.id
       redirect_to home_path
     else
-      flash[:error] = result.error_message
+      flash.now[:error] = result.error_message
       render :new
     end
   end

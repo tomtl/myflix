@@ -89,6 +89,5 @@ describe UserSignup do
         ActionMailer::Base.deliveries.clear
       end
     end
-
   end
 end
