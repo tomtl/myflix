@@ -36,11 +36,11 @@ class UserSignup
   private
 
   def charge_for_signup(stripe_token)
-      StripeWrapper::Charge.create(
-        amount: 999,
-        source: stripe_token,
-        description: "Sign up charge for #{@user.email}"
-      )
+    StripeWrapper::Charge.create(
+      amount: 999,
+      source: stripe_token,
+      description: "Sign up charge for #{@user.email}"
+    )
   end
 
   def handle_invitation(invitation_token)

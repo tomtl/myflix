@@ -106,7 +106,6 @@ describe UserSignup do
         UserSignup.new(
           User.new(email: "joe@example.com")
         ).sign_up(stripe_token: "1234567")
-
       end
 
       it "does not send out welcome email" do
