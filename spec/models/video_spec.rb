@@ -33,3 +33,26 @@ describe "search by title" do
     expect(Video.search_by_title("")).to eq([])
   end
 end
+
+describe "rating" do
+  it "returns the correct rating" do
+    video = Fabricate(:video)
+    user1 = Fabricate(:user)
+    Fabricate(:review, user: user1, rating: 5, video: video)
+    expect(video.rating).to eq(5)
+  end
+
+  it "averages the rating for more than one review" do
+    video = Fabricate(:video)
+    user1 = Fabricate(:user)
+    user2 = Fabricate(:user)
+    Fabricate(:review, user: user1, rating: 1, video: video)
+    Fabricate(:review, user: user2, rating: 5, video: video)
+    expect(video.rating).to eq(3)
+  end
+
+  it "returns nil if no ratings are present" do
+    video = Fabricate(:video)
+    expect(video.rating).to be_nil
+  end
+end
