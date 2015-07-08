@@ -19,6 +19,7 @@ gem 'carrierwave-aws'
 gem 'mini_magick'
 gem 'stripe'
 gem 'figaro'
+gem 'draper', '~> 1.3'
 
 group :test do
   gem 'database_cleaner', '1.2.0'

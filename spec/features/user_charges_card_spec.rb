@@ -38,7 +38,7 @@ feature "User charges card", :js, :vcr do
 
   scenario "Invalid user info and valid credit card" do
     register_user(invalid_user, valid_credit_card)
-    expect(page).to have_content("Please fix the following errors")
+    expect(page).to have_content("Please fix the errors below")
   end
 
   scenario "Invalid user info and invalid credit card" do
@@ -48,7 +48,7 @@ feature "User charges card", :js, :vcr do
 
   scenario "Invalid user info and declined card" do
     register_user(invalid_user, declined_credit_card)
-    expect(page).to have_content("Please fix the following errors")
+    expect(page).to have_content("Please fix the errors below")
   end
 
   def register_user(user, card_number)
