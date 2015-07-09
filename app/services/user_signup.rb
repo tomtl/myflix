@@ -37,9 +37,17 @@ class UserSignup
 
   def charge_for_signup(stripe_token)
     StripeWrapper::Charge.create(
-      amount: 999,
       source: stripe_token,
+      amount: 999,
       description: "Sign up charge for #{@user.email}"
+    )
+  end
+
+  def subscribe_customer_to_monthly_payment_plan
+    StripeWrapper::Customer.create(
+      source: stripe_token,
+      plan: "tomtl-myflix-monthly-plan",
+      customer_email: @user.email
     )
   end
 

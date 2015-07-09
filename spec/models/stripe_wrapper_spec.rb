@@ -25,11 +25,11 @@ describe StripeWrapper do
       context "with a valid card" do
         let(:card_number) { "4242424242424242" }
 
-        it "makes a successful charge", :vcr do
+        it "makes a successful charge" do
           expect(charge).to be_successful
         end
 
-        it "charges the correct amount", :vcr do
+        it "charges the correct amount" do
           expect(charge.response.amount).to be(999)
         end
       end
@@ -37,13 +37,40 @@ describe StripeWrapper do
       context "with an invalid card" do
         let(:card_number) { "4000000000000002" }
 
-        it "does not charge the card", :vcr do
+        it "does not charge the card" do
           expect(charge).not_to be_successful
         end
 
-        it "contains an error message", :vcr do
+        it "contains an error message" do
           expect(charge.error_message).to be_present
         end
+      end
+    end
+  end
+
+  describe StripeWrapper::Customer do
+    describe ".create" do
+      let(:token) do
+        Stripe::Token.create(
+          card: {
+            number: "4242424242424242",
+            exp_month: 6,
+            exp_year: 2018,
+            cvc: "314"
+          },
+        ).id
+      end
+
+      let(:charge) do
+        StripeWrapper::Customer.create(
+          source: token,
+          plan: "tomtl-myflix-monthly-plan",
+          email: "joe@example.com"
+        )
+      end
+
+      it "returns a customer id" do
+        expect(charge.response.id).to be_present
       end
     end
   end
