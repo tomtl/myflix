@@ -53,7 +53,7 @@ describe StripeWrapper do
       let(:token) do
         Stripe::Token.create(
           card: {
-            number: "4242424242424242",
+            number: card_number,
             exp_month: 6,
             exp_year: 2018,
             cvc: "314"
@@ -61,7 +61,7 @@ describe StripeWrapper do
         ).id
       end
 
-      let(:charge) do
+      let(:create_customer) do
         StripeWrapper::Customer.create(
           source: token,
           plan: "tomtl-myflix-monthly-plan",
@@ -69,8 +69,28 @@ describe StripeWrapper do
         )
       end
 
-      it "returns a customer id" do
-        expect(charge.response.id).to be_present
+      context "with a valid card" do
+        let(:card_number) { "4242424242424242" }
+
+        it "receives the customer id from the Stripe API" do
+          expect(create_customer.response.id).to be_present
+        end
+
+        it "outputs a successful message" do
+          expect(create_customer.successful?).to be_truthy
+        end
+      end
+
+      context "with invalid card" do
+        let(:card_number) { "4000000000000002" }
+
+        it "is not successful" do
+          expect(create_customer.successful?).to be_falsey
+        end
+
+        it "outputs an error message" do
+          expect(create_customer.error_message).to eq("Your card was declined.")
+        end
       end
     end
   end
