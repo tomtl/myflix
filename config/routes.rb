@@ -41,8 +41,10 @@ Myflix::Application.routes.draw do
   resources :invitations, only: [:new, :create]
 
   get 'ui(/:action)', controller: 'ui'
-  
+
   # Sidekiq monitoring
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
+
+  mount StripeEvent::Engine, at: "stripe_events"
 end
