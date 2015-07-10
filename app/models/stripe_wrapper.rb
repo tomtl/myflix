@@ -50,5 +50,9 @@ module StripeWrapper
     def successful?
       response.present?
     end
+
+    def stripe_customer_id
+      response.id
+    end
   end
 end

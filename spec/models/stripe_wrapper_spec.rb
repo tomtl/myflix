@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe StripeWrapper do
   describe StripeWrapper::Charge do
-    describe ".create" do
+    describe ".create", :vcr do
       let(:token) do
         Stripe::Token.create(
           card: {
@@ -49,7 +49,7 @@ describe StripeWrapper do
   end
 
   describe StripeWrapper::Customer do
-    describe ".create" do
+    describe ".create", :vcr do
       let(:token) do
         Stripe::Token.create(
           card: {
@@ -72,12 +72,17 @@ describe StripeWrapper do
       context "with a valid card" do
         let(:card_number) { "4242424242424242" }
 
-        it "receives the customer id from the Stripe API" do
-          expect(create_customer.response.id).to be_present
-        end
-
         it "outputs a successful message" do
           expect(create_customer.successful?).to be_truthy
+        end
+
+        it "outputs the Stripe customer id" do
+          expect(create_customer.stripe_customer_id).to be_present
+        end
+
+        it "signs the user up to the correct plan" do
+          create_customer_response_plan = create_customer.response.subscriptions.data.last.plan.id
+          expect(create_customer_response_plan).to eq("tomtl-myflix-monthly-plan")
         end
       end
 
