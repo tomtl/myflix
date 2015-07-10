@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe StripeWrapper do
   describe StripeWrapper::Charge do
-    describe ".create", :vcr do
+    describe ".create" do
       let(:token) do
         Stripe::Token.create(
           card: {
@@ -22,7 +22,7 @@ describe StripeWrapper do
         )
       end
 
-      context "with a valid card" do
+      context "with a valid card", :vcr do
         let(:card_number) { "4242424242424242" }
 
         it "makes a successful charge" do
@@ -34,7 +34,7 @@ describe StripeWrapper do
         end
       end
 
-      context "with an invalid card" do
+      context "with an invalid card", :vcr do
         let(:card_number) { "4000000000000002" }
 
         it "does not charge the card" do
@@ -49,7 +49,7 @@ describe StripeWrapper do
   end
 
   describe StripeWrapper::Customer do
-    describe ".create", :vcr do
+    describe ".create" do
       let(:token) do
         Stripe::Token.create(
           card: {
@@ -69,11 +69,11 @@ describe StripeWrapper do
         )
       end
 
-      context "with a valid card" do
+      context "with a valid card", :vcr do
         let(:card_number) { "4242424242424242" }
 
         it "outputs a successful message" do
-          expect(create_customer.successful?).to be_truthy
+          expect(create_customer.successful?).to be true
         end
 
         it "outputs the Stripe customer id" do
@@ -86,11 +86,11 @@ describe StripeWrapper do
         end
       end
 
-      context "with invalid card" do
+      context "with invalid card", :vcr do
         let(:card_number) { "4000000000000002" }
 
         it "is not successful" do
-          expect(create_customer.successful?).to be_falsey
+          expect(create_customer.successful?).to be false
         end
 
         it "outputs an error message" do
