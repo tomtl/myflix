@@ -45,7 +45,7 @@ class UserSignup
   end
 
   def add_user_stripe_customer_id(subscription)
-     @user.stripe_customer_id = subscription.stripe_customer_id
+    @user.stripe_customer_id = subscription.stripe_customer_id
   end
 
   def handle_invitation(invitation_token)

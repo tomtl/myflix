@@ -81,8 +81,8 @@ describe StripeWrapper do
         end
 
         it "signs the user up to the correct plan" do
-          create_customer_response_plan = create_customer.response.subscriptions.data.last.plan.id
-          expect(create_customer_response_plan).to eq("tomtl-myflix-monthly-plan")
+          plan = create_customer.response.subscriptions.data.last.plan.id
+          expect(plan).to eq("tomtl-myflix-monthly-plan")
         end
       end
 

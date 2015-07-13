@@ -20,6 +20,7 @@ feature "Signing in" do
     deactivated_user = Fabricate(:user, active: false)
     sign_in(deactivated_user)
     expect(page).not_to have_content(user.full_name)
-    expect(page).to have_content("Your account has been suspended, please contact customer service.")
+    expect(page).to have_content(
+      "Your account has been suspended, please contact customer service.")
   end
 end

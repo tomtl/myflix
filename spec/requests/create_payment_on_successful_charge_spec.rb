@@ -76,7 +76,7 @@ describe "Create payment on successful charge" do
     }
   end
 
-  it "creates a payment with the webhook from stripe for charge succeeded", :vcr do
+  it "creates payment with webhook from stripe for charge succeeded", :vcr do
     post "/stripe_events", event_data
     expect(Payment.count).to eq(1)
   end
@@ -88,13 +88,13 @@ describe "Create payment on successful charge" do
   end
 
   it "creates the payment with the amount", :vcr do
-    user1 = Fabricate(:user, stripe_customer_id: "cus_6aIi0dvRVgO0ag")
+    Fabricate(:user, stripe_customer_id: "cus_6aIi0dvRVgO0ag")
     post "/stripe_events", event_data
     expect(Payment.last.amount).to eq(999)
   end
 
   it "creates the payment with the reference_id", :vcr do
-    user1 = Fabricate(:user, stripe_customer_id: "cus_6aIi0dvRVgO0ag")
+    Fabricate(:user, stripe_customer_id: "cus_6aIi0dvRVgO0ag")
     post "/stripe_events", event_data
     expect(Payment.last.reference_id).to eq("ch_16N86mIgCm8hkqALgUEwkEft")
   end
