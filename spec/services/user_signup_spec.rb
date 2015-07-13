@@ -86,7 +86,13 @@ describe UserSignup do
     end
 
     context "with valid personal info and declined credit card" do
-      let(:customer) { double(:customer, successful?: false, error_message: "Your card was declined.") }
+      let(:customer) do
+        double(
+          :customer,
+          successful?: false,
+          error_message: "Your card was declined."
+        )
+      end
 
       before do
         StripeWrapper::Customer.should_receive(:create).and_return(customer)
