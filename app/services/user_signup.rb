@@ -10,16 +10,17 @@ class UserSignup
     invitation_token = sign_up_options[:invitation_token]
 
     if @user.valid?
-      charge = charge_for_signup(stripe_token)
+      subscription = subscribe_customer_to_monthly_payment_plan(stripe_token)
 
-      if charge.successful?
+      if subscription.successful?
+        add_user_stripe_customer_id(subscription)
         @user.save
         handle_invitation(invitation_token) if invitation_token.present?
         send_welcome_email
         @status = :success
       else
         @status = :failed
-        @error_message = charge.error_message
+        @error_message = subscription.error_message
       end
     else
       @status = :failed
@@ -35,12 +36,16 @@ class UserSignup
 
   private
 
-  def charge_for_signup(stripe_token)
-    StripeWrapper::Charge.create(
-      amount: 999,
+  def subscribe_customer_to_monthly_payment_plan(stripe_token)
+    StripeWrapper::Customer.create(
       source: stripe_token,
-      description: "Sign up charge for #{@user.email}"
+      plan: "tomtl-myflix-monthly-plan",
+      customer_email: @user.email
     )
+  end
+
+  def add_user_stripe_customer_id(subscription)
+    @user.stripe_customer_id = subscription.stripe_customer_id
   end
 
   def handle_invitation(invitation_token)
