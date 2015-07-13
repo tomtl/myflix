@@ -76,6 +76,9 @@ describe "Deactivate user on failed charge" do
     }
   end
 
-  it "deactivates a user with a web hook user from Stripe"
-
+  it "deactivates a user with a web hook user from Stripe", :vcr do
+    user1 = Fabricate(:user, stripe_customer_id: "cus_6aebQU7IVkT9ev")
+    post "/stripe_events", event_data
+    expect(User.last).not_to be_active
+  end
 end
